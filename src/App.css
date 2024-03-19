@@ -1,10 +1,18 @@
 .App {
-  text-align: center;
+    padding: 50px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App button {
+  background-color: #4f4f4f;
+  color: whitesmoke;
+  padding: 8px 40px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: no-preference) {
