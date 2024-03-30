@@ -1,29 +1,35 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import React from "react";
+import { useState } from "react";
+import { AllPokemonApi } from '../services/getPokeapi';
 
 const PokeApi = () => {
-    const [pokeList, setPokeList] = useState([]);
-    const [butClick, setButClick] = useState(false);
+    const [list, setList] = useState([]);
 
-    useEffect(() => {
-        if (butClick) {
-            axios.get('https://pokeapi.co/api/v2/pokemon/')
-                .then(response => setPokeList(response.data.results.map(pokemon => pokemon.name)))
-                .catch(console.error);
-        }
-    }, [butClick]);
-
-    
-    const clickPok = () => setButClick(true);
+    const handleListPokemon = async () => {
+        try {
+            const response = await AllPokemonApi();
+            console.log("response", response.data.results);
+            setList(response.data.results);
+            //   console.log("response", response.data.results);
+            } catch (error) {
+                console.error(error.message);
+            }
+    }
 
     return (
-        <div className="Pokeapi">
-            <button onClick={clickPok}>Find Names</button>
-            <ul>
-                {pokeList.map((pokName, i) => (<li key={i}>{pokName}</li>))}
-            </ul>
+        < div className="Pokeapi" >
+            <button onClick={() => handleListPokemon()}>Fetch Pokemon</button>
+            {
+                list.map((data, i) => {
+                    return (
+                    <ul>
+                        <li key={i}>{data.name}</li>
+                    </ul>
+                    )
+                })
+            }
         </div>
-    )
+    );
 }
 
 export default PokeApi;
